@@ -1,11 +1,9 @@
-from data import UBUNTU_AMI, AMAZON_LINUX_AMI
+from data import UBUNTU_AMI, AMAZON_LINUX_AMI, AV_ZONES, DEFAULT_AV_ZONE
 import sys
 
 EXIT_CODE = "0"
 UBUNTU, AMAZON_LINUX = "1", "2"
 T3_SMALL, T3_MEDIUM = "1", "2"
-AV_ZONES = {"us-east-1a": "us-east-1"}
-DEFAULT_AV_ZONE = "us-east-1a"
 
 
 def suggest_exit():
