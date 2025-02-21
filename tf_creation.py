@@ -59,7 +59,7 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
     }
 
     resource "aws_lb_target_group" "web_target_group" {
-      name     = "web-target-group"
+      name     = "web-target-group-unique"
       port     = 80
       protocol = "HTTP"
       vpc_id   = aws_vpc.main.id
