@@ -7,12 +7,18 @@ T3_SMALL, T3_MEDIUM = "1", "2"
 
 
 def suggest_exit():
+    """
+    allows user to exit
+    """
     exit_input = input("do you want to exit? if so - press 0 and click enter, otherwise press any key ")
     if exit_input == EXIT_CODE:
         sys.exit(0)
 
 
 def request_ami():
+    """
+    asks user to provide an ami
+    """
     ami = None
     while ami is None:
         user_choice = input("Would you like Ubuntu (choose 1) or Amazon linux (choose 2)? 1/2: ")
@@ -27,6 +33,9 @@ def request_ami():
 
 
 def request_instance_type():
+    """
+    asks user to provide an instance type
+    """
     instance_type = None
     while instance_type is None:
         user_choice = input("Would you like t3.small machine (choose 1) or t3.medium machine (choose 2)? 1/2: ")
@@ -41,6 +50,9 @@ def request_instance_type():
 
 
 def request_availability_zone():
+    """
+    asks user to provide an availability zone
+    """
     user_choice = input("which availability zone would you prefer: ")
     try:
         region = AV_ZONES[user_choice]
@@ -55,6 +67,9 @@ def request_availability_zone():
 
 
 def request_alb_name():
+    """
+    asks user to provide a name for a load balancer
+    """
     user_alb_name = None
     valid = False
     while not valid:

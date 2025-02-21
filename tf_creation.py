@@ -5,7 +5,11 @@ TF_FAILED = -1
 
 
 def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: str, load_balancer_name: str):
+    """
+    create a rendered template for main.tf file for terraform build process
+    """
 
+    # create a template for main.tf file
     terraform_template = """
     provider "aws" {
       region = "{{ region }}"
@@ -85,6 +89,7 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
     }
     """
 
+    # render the template
     template = Template(terraform_template)
     rendered_template = template.render(
         ami=ami,
@@ -100,7 +105,7 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
 def run_terraform():
     terraform = Terraform(working_dir=".")
 
-    # Initialize Terraform
+    # initialize
     print("\nInitializing Terraform...")
     return_code, stdout, stderr = terraform.init()
     print(stdout)
@@ -109,7 +114,7 @@ def run_terraform():
         terraform.destroy(skip_plan=True)
         return TF_FAILED
 
-    # Plan Terraform execution
+    # plan execution
     print("\nPlanning Terraform deployment...")
     return_code, stdout, stderr = terraform.plan()
     print(stdout)
@@ -118,7 +123,7 @@ def run_terraform():
         terraform.destroy(skip_plan=True)
         return TF_FAILED
 
-    # Apply Terraform deployment
+    # apply deployment
     print("\nApplying Terraform...")
     return_code, stdout, stderr = terraform.apply(skip_plan=True)
     print(stdout)
@@ -127,7 +132,7 @@ def run_terraform():
         terraform.destroy(skip_plan=True)
         return TF_FAILED
 
-    # Capture Terraform output values
+    # capture instance id and alb dns name from outputs values
     print("\nFetching Terraform outputs...")
     return_code, output, stderr = terraform.output()
     if return_code == 0:
@@ -142,5 +147,7 @@ def run_terraform():
 
 
 def mock_details():
-  # mock details
-  return "instance_ip", "lb_dns_name"
+  """
+  mock instance id and alb dns name
+  """
+  return "instance_ip", "lb-dns-name"

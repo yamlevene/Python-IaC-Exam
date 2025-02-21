@@ -31,26 +31,25 @@ if __name__ == '__main__':
         print("resources were created successfuly")
         instance_id, lb_dns_name = build_output
     
-
-    # Validate EC2 instance
+    # validate EC2 instance
     ec2_validation_output = validate_ec2_instance(instance_id)
     if ec2_validation_output == VALIDATION_FAIL:
         # mock values
         print("mocking EC2 instance details")
-        instance_state, public_ip = "mocking state", "mocking_ip"
+        instance_state, public_ip = "mocking-state", "mocking-ip"
     else:
         instance_state, public_ip = validation_output
     
-    # Validate ALB
+    # validate ALB
     lb_validation_output = validate_alb(lb_dns_name)
     if lb_validation_output == VALIDATION_FAIL:
         # mock values
         print("mocking ALB details")
-        lb_dns = "mocking DNS name"
+        lb_dns = "mocking-DNS-name"
     else:
         lb_dns = validation_output
     
-    # Store the captured data in a JSON file
+    # store the captured data in a JSON file
     validation_data = {
         "instance_id": instance_id,
         "instance_state": instance_state,
