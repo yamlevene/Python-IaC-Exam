@@ -1,0 +1,2 @@
+UBUNTU_AMI = "ami-0dee1ac7107ae9f8c"
+AMAZON_LINUX_AMI = "ami-0f1a6835595fb9246"
