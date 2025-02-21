@@ -100,8 +100,6 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
         load_balancer_name=load_balancer_name
     )
 
-    print(rendered_template)
-
     return rendered_template
 
 
