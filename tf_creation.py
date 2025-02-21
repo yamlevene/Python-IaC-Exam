@@ -1,4 +1,7 @@
 from jinja2 import Template
+from python_terraform import Terraform
+
+TF_FAILED = -1
 
 
 def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: str, load_balancer_name: str):
@@ -12,6 +15,7 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
       ami = "{{ ami }}"
       instance_type = "{{ instance_type }}"
       availability_zone = "{{ availability_zone }}"
+      subnet_id         = aws_subnet.public[0].id
 
       tags = {
         Name = "WebServer"
@@ -71,6 +75,14 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
     resource "aws_vpc" "main" {
       cidr_block = "10.0.0.0/16"
     }
+
+    output "instance_id" {
+      value = aws_instance.web_server.id
+    }
+
+    output "load_balancer_dns" {
+      value = aws_lb.application_lb.dns_name
+    }
     """
 
     template = Template(terraform_template)
@@ -83,3 +95,48 @@ def build_tf_file(ami: str, region: str, availability_zone: str, instance_type: 
     )
 
     return rendered_template
+
+
+def run_terraform():
+    terraform = Terraform(working_dir=".")
+
+    # Initialize Terraform
+    print("\nInitializing Terraform...")
+    return_code, stdout, stderr = terraform.init()
+    print(stdout)
+    if return_code == 1:
+        print(stderr)
+        return TF_FAILED
+
+    # Plan Terraform execution
+    print("\nPlanning Terraform deployment...")
+    return_code, stdout, stderr = terraform.plan()
+    print(stdout)
+    if return_code == 1:
+        print(stderr)
+        return TF_FAILED
+
+    # Apply Terraform deployment
+    print("\nApplying Terraform...")
+    return_code, stdout, stderr = terraform.apply(skip_plan=True)
+    print(stdout)
+    if return_code == 1:
+        print(stderr)
+        return TF_FAILED
+
+    # Capture Terraform output values
+    print("\nFetching Terraform outputs...")
+    return_code, output, stderr = terraform.output()
+    if return_code == 0:
+        print("Terraform Outputs:", output)
+        instance_id = output.get("instance_id", {}).get("value", "N/A")
+        load_balancer_dns = output.get("load_balancer_dns", {}).get("value", "N/A")
+        return instance_id, load_balancer_dns
+    else:
+        print(stderr)
+        return TF_FAILED
+
+
+def mock_details():
+  # mock details
+  return "instance_ip", "lb_dns_name"

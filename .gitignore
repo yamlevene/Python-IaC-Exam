@@ -169,3 +169,18 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Ignore Terraform files and state
+.terraform.lock.hcl
+.terraform/
+
+# Ignore Terraform state and backup files
+terraform.tfstate
+terraform.tfstate.backup
+
+# Ignore the validation output file
+aws_validation.json
+
+# Ignore main Terraform configuration file if needed
+main.tf
+

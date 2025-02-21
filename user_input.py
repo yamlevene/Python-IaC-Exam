@@ -2,7 +2,7 @@ from data import UBUNTU_AMI, AMAZON_LINUX_AMI
 
 UBUNTU, AMAZON_LINUX = "1", "2"
 T3_SMALL, T3_MEDIUM = "1", "2"
-AV_ZONES = {"us-east-1a": ["us-east"]}
+AV_ZONES = {"us-east-1a": "us-east-1"}
 DEFAULT_AV_ZONE = "us-east-1a"
 
 
