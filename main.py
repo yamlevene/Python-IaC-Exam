@@ -1,6 +1,6 @@
 import json
 from user_input import *
-from tf_creation import build_tf_file, run_terraform, extract_from_tf_output, mock_details, TF_FAILED
+from tf_creation import build_tf_file, run_terraform, mock_details, TF_FAILED
 from validate_resources import validate_ec2_instance, validate_alb, VALIDATION_FAIL
 
 
@@ -19,16 +19,16 @@ if __name__ == '__main__':
     with open("main.tf", "w") as tf_file:
         tf_file.write(tf_content)
 
-    print("\nCreated Terraform configuration file - main.tf")
+    print("Created Terraform configuration file - main.tf")
     print("Starting to run main.tf...")
 
     # build the resources
     build_output = run_terraform()
     if build_output == TF_FAILED:
-        print("\ncouldn't create resources, mocking values were given")
+        print("couldn't create resources, mocking values were given")
         instance_id, lb_dns_name = mock_details()
     else:
-        print("\nresources were created successfuly")
+        print("resources were created successfuly")
         instance_id, lb_dns_name = build_output
     
 

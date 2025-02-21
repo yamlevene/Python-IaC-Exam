@@ -106,6 +106,7 @@ def run_terraform():
     print(stdout)
     if return_code == 1:
         print(stderr)
+        terraform.destroy(skip_plan=True)
         return TF_FAILED
 
     # Plan Terraform execution
@@ -114,6 +115,7 @@ def run_terraform():
     print(stdout)
     if return_code == 1:
         print(stderr)
+        terraform.destroy(skip_plan=True)
         return TF_FAILED
 
     # Apply Terraform deployment
@@ -122,6 +124,7 @@ def run_terraform():
     print(stdout)
     if return_code == 1:
         print(stderr)
+        terraform.destroy(skip_plan=True)
         return TF_FAILED
 
     # Capture Terraform output values
@@ -134,6 +137,7 @@ def run_terraform():
         return instance_id, load_balancer_dns
     else:
         print(stderr)
+        terraform.destroy(skip_plan=True)
         return TF_FAILED
 
 
